@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahdy Exams</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Tahoma, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f7fb;
+      color: #202124;
+    }
+
+    header {
+      background: white;
+      padding: 18px 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-content {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #673ab7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 35px auto;
+      padding: 0 15px;
+    }
+
+    .welcome {
+      background: white;
+      border-radius: 18px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 5px 25px rgba(0,0,0,.07);
+    }
+
+    .welcome h1 {
+      margin-top: 0;
+      font-size: 32px;
+    }
+
+    .welcome p {
+      color: #666;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 13px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #673ab7;
+      color: white;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      opacity: .9;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.06);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #673ab7;
+    }
+
+    .question h3 {
+      margin-top: 0;
+      line-height: 1.7;
+    }
+
+    .option {
+      display: block;
+      padding: 13px;
+      margin: 9px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .option:hover {
+      background: #f4f0ff;
+      border-color: #673ab7;
+    }
+
+    .option input {
+      width: auto;
+      margin-left: 8px;
+    }
+
+    .result {
+      text-align: center;
+      background: white;
+      border-radius: 18px;
+      padding: 35px 20px;
+      box-shadow: 0 5px 25px rgba(0,0,0,.08);
+    }
+
+    .score {
+      font-size: 42px;
+      font-weight: bold;
+      color: #673ab7;
+      margin: 15px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">
+      Mahdy <span>Exams</span>
+    </div>
+    <div>منصة الامتحانات</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- الصفحة الرئيسية -->
+  <section id="home" class="welcome">
+    <h1>مرحبًا بك في Mahdy Exams 👋</h1>
+    <p>
+      منصة بسيطة ومنظمة لإنشاء وحل الامتحانات.
+      <br>
+      ابدأ امتحانك الآن.
+    </p>
+
+    <button class="btn" onclick="showExam()">
+      ابدأ الامتحان
+    </button>
+  </section>
+
+  <!-- صفحة الامتحان -->
+  <section id="exam" class="hidden">
+
+    <div class="card">
+      <h2>بيانات الطالب</h2>
+
+      <label for="studentName">اسم الطالب</label>
+      <input
+        id="studentName"
+        type="text"
+        placeholder="اكتب اسمك هنا"
+      >
+    </div>
+
+    <div class="card question">
+      <h3>1- ما هو جمع كلمة "كتاب"؟</h3>
+
+      <label class="option">
+        <input type="radio" name="q1" value="0">
+        كاتب
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="1">
+        كتب
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="0">
+        مكتبة
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q1" value="0">
+        كتابة
+      </label>
+    </div>
+
+    <div class="card question">
+      <h3>2- اختر اسم الفاعل من الكلمات الآتية:</h3>
+
+      <label class="option">
+        <input type="radio" name="q2" value="1">
+        ملتزم
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="0">
+        التزام
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="0">
+        التزم
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q2" value="0">
+        لزوم
+      </label>
+    </div>
+
+    <div class="card question">
+      <h3>3- أي الكلمات الآتية اسم مفعول؟</h3>
+
+      <label class="option">
+        <input type="radio" name="q3" value="0">
+        كاتب
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q3" value="0">
+        يكتب
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q3" value="1">
+        مكتوب
+      </label>
+
+      <label class="option">
+        <input type="radio" name="q3" value="0">
+        كتابة
+      </label>
+    </div>
+
+    <div class="card">
+      <button class="btn" onclick="submitExam()">
+        تسليم الامتحان
+      </button>
+    </div>
+
+  </section>
+
+  <!-- النتيجة -->
+  <section id="result" class="hidden result">
+    <h2>تم تسليم الامتحان بنجاح 🎉</h2>
+
+    <p id="studentResult"></p>
+
+    <div class="score">
+      <span id="score">0</span> / 3
+    </div>
+
+    <p>هذه نتيجتك في الامتحان.</p>
+
+    <button class="btn" onclick="location.reload()">
+      امتحان جديد
+    </button>
+  </section>
+
+</div>
+
+<footer>
+  Mahdy Exams © 2026
+</footer>
+
+<script>
+  function showExam() {
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("exam").classList.remove("hidden");
+    window.scrollTo(0, 0);
+  }
+
+  function submitExam() {
+
+    const name = document.getElementById("studentName").value.trim();
+
+    if (!name) {
+      alert("من فضلك اكتب اسم الطالب أولًا.");
+      return;
+    }
+
+    let score = 0;
+
+    const questions = ["q1", "q2", "q3"];
+
+    questions.forEach(function(question) {
+      const answer = document.querySelector(
+        'input[name="' + question + '"]:checked'
+      );
+
+      if (answer) {
+        score += Number(answer.value);
+      }
+    });
+
+    document.getElementById("exam").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+
+    document.getElementById("studentResult").textContent =
+      "الطالب: " + name;
+
+    document.getElementById("score").textContent = score;
+
+    window.scrollTo(0, 0);
+  }
+</script>
+
+</body>
+</html>
