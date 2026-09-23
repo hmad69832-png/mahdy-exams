@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahdy Exams | منصة الامتحانات</title>
+
+<style>
+:root {
+  --primary:#5146e5;
+  --dark:#191b35;
+  --bg:#f5f6fb;
+  --border:#e7e8f0;
+  --muted:#74778c;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+  font-family:Tahoma,Arial,sans-serif;
+}
+
+header{
+  background:white;
+  border-bottom:1px solid var(--border);
+  padding:15px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.logo{
+  font-size:21px;
+  font-weight:bold;
+  color:var(--primary);
+}
+
+.logo span{color:var(--dark)}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 17px;
+  font:inherit;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary{background:var(--primary);color:white}
+.secondary{background:#eeedff;color:var(--primary)}
+.danger{background:#fff0f0;color:#c33}
+
+button:hover{opacity:.88}
+
+main{
+  max-width:1000px;
+  margin:28px auto;
+  padding:0 16px;
+}
+
+.hero{
+  background:linear-gradient(125deg,#5146e5,#8275fa);
+  color:white;
+  padding:30px 24px;
+  border-radius:18px;
+  margin-bottom:24px;
+}
+
+.hero h1{font-size:29px;margin:0 0 12px}
+.hero p{line-height:1.9;margin:0 0 18px}
+.hero button{background:white;color:var(--primary)}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:20px 0;
+}
+
+.stat,.card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+}
+
+.stat b{
+  font-size:24px;
+  display:block;
+  margin-bottom:6px;
+}
+
+.muted{color:var(--muted);font-size:13px}
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:25px 0 14px;
+}
+
+.section-head h2{margin:0;font-size:20px}
+
+.exam-list{display:grid;gap:13px}
+
+.exam-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:18px;
+}
+
+.exam-card h3{margin:0 0 9px}
+.exam-card p{color:var(--muted);font-size:14px}
+
+.tag{
+  display:inline-block;
+  background:#eeedff;
+  color:var(--primary);
+  border-radius:7px;
+  padding:5px 9px;
+  font-size:12px;
+}
+
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin:7px 0 14px;
+  border:1px solid #dcddea;
+  border-radius:9px;
+  font:inherit;
+  background:white;
+  color:var(--dark);
+}
+
+textarea{min-height:85px;resize:vertical}
+label{font-size:14px;font-weight:bold}
+.field{margin-bottom:5px}
+
+.form-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.question-box{
+  border:1px solid var(--border);
+  padding:14px;
+  border-radius:12px;
+  margin:12px 0;
+  background:#fafaff;
+}
+
+.option-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.option-row input{margin:5px 0}
+.option-row input[type=radio]{width:auto}
+
+.exam-question{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:18px;
+  margin:14px 0;
+}
+
+.answer{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:9px;
+  margin:8px 0;
+  cursor:pointer;
+}
+
+.answer:has(input:checked){
+  border-color:var(--primary);
+  background:#f2f1ff;
+}
+
+.answer input{width:auto;margin:0}
+
+.notice{
+  background:#fff8df;
+  padding:13px;
+  border-radius:10px;
+  font-size:13px;
+  line-height:1.8;
+  margin:12px 0;
+}
+
+.empty{
+  text-align:center;
+  padding:30px;
+  background:white;
+  border:1px dashed #cfd0df;
+  border-radius:13px;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  padding:28px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.hidden{display:none!important}
+
+@media(max-width:600px){
+  .stats{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:24px}
+  header{padding:13px 4%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Mahdy <span>Exams</span> ✦</div>
+  <button class="secondary" onclick="home()">الرئيسية</button>
+</header>
+
+<main>
+
+<section id="homePage">
+
+  <div class="hero">
+    <h1>امتحاناتك.. في مكان واحد 🎓</h1>
+    <p>أنشئ امتحانك، اختبر مستواك، وشارك المعرفة مع الآخرين.</p>
+    <button onclick="newExam()">＋ إنشاء امتحان جديد</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <b id="examCount">0</b>
+      <span class="muted">امتحان منشور</span>
+    </div>
+
+    <div class="stat">
+      <b id="questionCount">0</b>
+      <span class="muted">سؤال</span>
+    </div>
+
+    <div class="stat">
+      <b>∞</b>
+      <span class="muted">فرص التعلّم</span>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>الامتحانات المتاحة</h2>
+    <button class="primary" onclick="newExam()">＋ امتحان جديد</button>
+  </div>
+
+  <div id="examList" class="exam-list"></div>
+
+</section>
+
+<section id="createPage" class="hidden">
+
+  <div class="card">
+    <h2>إنشاء امتحان جديد</h2>
+    <p class="muted">املأ البيانات، ثم أضف أسئلتك.</p>
+
+    <div class="field">
+      <label>اسم الامتحان</label>
+      <input id="examTitle" placeholder="مثال: امتحان نحو - الوحدة الأولى">
+    </div>
+
+    <div class="field">
+      <label>المادة</label>
+      <select id="examSubject">
+        <option>اللغة العربية</option>
+        <option>اللغة الإنجليزية</option>
+        <option>الرياضيات</option>
+        <option>العلوم</option>
+        <option>الدراسات الاجتماعية</option>
+        <option>أخرى</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>الصف الدراسي</label>
+      <input id="examGrade" placeholder="مثال: ثالثة إعدادي">
+    </div>
+
+    <div class="field">
+      <label>وصف الامتحان (اختياري)</label>
+      <textarea id="examDesc" placeholder="تعليمات للطلاب..."></textarea>
+    </div>
+
+    <hr style="border:0;border-top:1px solid #eee">
+
+    <h3>أسئلة الامتحان</h3>
+    <div id="questions"></div>
+
+    <button class="secondary" onclick="addQuestion()">＋ إضافة سؤال</button>
+
+    <div class="notice">
+      النسخة الحالية تدعم أسئلة الاختيار من متعدد.
+      حدد الإجابة الصحيحة لكل سؤال قبل النشر.
+    </div>
+
+    <div class="form-actions">
+      <button class="primary" onclick="publishExam()">نشر الامتحان</button>
+      <button class="secondary" onclick="home()">إلغاء</button>
+    </div>
+  </div>
+
+</section>
+
+<section id="solvePage" class="hidden">
+
+  <div class="card">
+    <h2 id="solveTitle"></h2>
+    <p id="solveInfo" class="muted"></p>
+
+    <div class="notice">
+      اختر إجابة لكل سؤال، ثم اضغط تسليم الامتحان.
+    </div>
+
+    <form id="solveForm">
+      <div id="solveQuestions"></div>
+
+      <button class="primary" type="submit">تسليم الامتحان</button>
+      <button class="secondary" type="button" onclick="home()">رجوع</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+</section>
+
+</main>
+
+<footer>Mahdy Exams © 2026 — منصة تعليمية قيد التطوير</footer>
+
+<script>
+const KEY = "mahdy_exams_v1";
+let exams = [];
+let currentExam = null;
+
+function load(){
+  try{
+    exams = JSON.parse(localStorage.getItem(KEY)) || [];
+  }catch(e){
+    exams = [];
+  }
+}
+
+function save(){
+  localStorage.setItem(KEY, JSON.stringify(exams));
+}
+
+function show(id){
+  ["homePage","createPage","solvePage"].forEach(x=>
+    document.getElementById(x).classList.add("hidden")
+  );
+
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo(0,0);
+}
+
+function home(){
+  render();
+  show("homePage");
+}
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[c]));
+}
+
+function newExam(){
+  document.getElementById("examTitle").value="";
+  document.getElementById("examGrade").value="";
+  document.getElementById("examDesc").value="";
+  document.getElementById("examSubject").selectedIndex=0;
+  document.getElementById("questions").innerHTML="";
+
+  addQuestion();
+  show("createPage");
+}
+
+function addQuestion(){
+  const n = document.querySelectorAll("#questions .question-box").length;
+
+  const box = document.createElement("div");
+  box.className = "question-box";
+  box.id = "q"+n;
+
+  box.innerHTML = `
+    <b>السؤال ${n+1}</b>
+
+    <input placeholder="اكتب نص السؤال" id="qt${n}">
+
+    <label>الاختيارات — حدد الإجابة الصحيحة</label>
+
+    ${[0,1,2,3].map(i=>`
+      <div class="option-row">
+        <input type="radio" name="correct${n}" value="${i}" ${i===0?"checked":""}>
+        <input placeholder="الاختيار ${i+1}" id="q${n}o${i}">
+      </div>
+    `).join("")}
+
+    <button type="button" class="danger" onclick="removeQuestion(${n})">
+      حذف السؤال
+    </button>
+  `;
+
+  document.getElementById("questions").appendChild(box);
+}
+
+function removeQuestion(n){
+  document.getElementById("q"+n)?.remove();
+}
+
+function publishExam(){
+  const title = document.getElementById("examTitle").value.trim();
+
+  if(!title){
+    alert("اكتب اسم الامتحان أولًا");
+    return;
+  }
+
+  const nodes = [...document.querySelectorAll("#questions .question-box")];
+
+  if(!nodes.length){
+    alert("أضف سؤالًا واحدًا على الأقل");
+    return;
+  }
+
+  const questions = [];
+
+  for(const node of nodes){
+    const id = node.id.slice(1);
+
+    const text = document.getElementById("qt"+id)?.value.trim();
+
+    const options = [0,1,2,3].map(i=>
+      document.getElementById("q"+id+"o"+i)?.value.trim() || ""
+    );
+
+    const correct = Number(
+      node.querySelector('input[type="radio"]:checked')?.value
+    );
+
+    if(!text || options.some(x=>!x)){
+      alert("أكمل نص كل سؤال وجميع الاختيارات");
+      return;
+    }
+
+    questions.push({text,options,correct});
+  }
+
+  exams.unshift({
+    id:Date.now().toString(36),
+    title,
+    subject:document.getElementById("examSubject").value,
+    grade:document.getElementById("examGrade").value.trim(),
+    desc:document.getElementById("examDesc").value.trim(),
+    questions
+  });
+
+  try{
+    save();
+  }catch(e){
+    alert("تعذر الحفظ. قد تكون مساحة التخزين ممتلئة.");
+    return;
+  }
+
+  alert("تم حفظ الامتحان على هذا المتصفح!");
+  home();
+}
+
+function render(){
+  document.getElementById("examCount").textContent = exams.length;
+
+  document.getElementById("questionCount").textContent =
+    exams.reduce((s,e)=>s+e.questions.length,0);
+
+  const list = document.getElementById("examList");
+
+  if(!exams.length){
+    list.innerHTML = `
+      <div class="empty">
+        لسه مفيش امتحانات.<br>
+        اضغط «إنشاء امتحان جديد» وابدأ أول امتحان!
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = exams.map(e=>`
+    <div class="exam-card">
+      <span class="tag">${escapeHTML(e.subject)}</span>
+
+      <h3>${escapeHTML(e.title)}</h3>
+
+      <p>${escapeHTML(e.grade||"كل الصفوف")} · ${e.questions.length} سؤال</p>
+
+      <p>${escapeHTML(e.desc||"اختبر معلوماتك وابدأ الحل.")}</p>
+
+      <div class="form-actions">
+        <button class="primary" onclick="solve('${e.id}')">ابدأ الامتحان ←</button>
+        <button class="danger" onclick="deleteExam('${e.id}')">حذف</button>
+        <button class="secondary" onclick="shareExam('${e.id}')">مشاركة</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function deleteExam(id){
+  if(!confirm("متأكد إنك عايز تحذف الامتحان؟"))return;
+
+  exams = exams.filter(e=>e.id!==id);
+  save();
+  render();
+}
+
+function shareExam(id){
+  const url = location.href.split("#")[0]+"#exam="+id;
+
+  if(navigator.share){
+    navigator.share({title:"Mahdy Exams",url}).catch(()=>{});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(url)
+      .then(()=>alert("تم نسخ الرابط"))
+      .catch(()=>prompt("انسخ الرابط:",url));
+  }else{
+    prompt("انسخ الرابط:",url);
+  }
+}
+
+function solve(id){
+  currentExam = exams.find(e=>e.id===id);
+
+  if(!currentExam)return;
+
+  document.getElementById("solveTitle").textContent = currentExam.title;
+
+  document.getElementById("solveInfo").textContent =
+    currentExam.subject+" · "+currentExam.questions.length+" سؤال";
+
+  document.getElementById("result").innerHTML = "";
+
+  document.getElementById("solveQuestions").innerHTML =
+    currentExam.questions.map((q,i)=>`
+      <div class="exam-question">
+        <b>${i+1}. ${escapeHTML(q.text)}</b>
+
+        ${q.options.map((o,j)=>`
+          <label class="answer">
+            <input type="radio" name="ans${i}" value="${j}">
+            ${escapeHTML(o)}
+          </label>
+        `).join("")}
+      </div>
+    `).join("");
+
+  show("solvePage");
+}
+
+document.getElementById("solveForm").addEventListener("submit",function(ev){
+  ev.preventDefault();
+
+  if(!currentExam)return;
+
+  const qs = currentExam.questions;
+  let score = 0;
+  let unanswered = 0;
+
+  qs.forEach((q,i)=>{
+    const a = document.querySelector('input[name="ans'+i+'"]:checked');
+
+    if(!a) unanswered++;
+    else if(Number(a.value)===q.correct) score++;
+  });
+
+  if(unanswered && !confirm("فيه أسئلة من غير إجابة. تسلّم؟"))return;
+
+  const percent = Math.round(score/qs.length*100);
+
+  document.getElementById("result").innerHTML = `
+    <div class="notice">
+      <h2>نتيجتك: ${score} من ${qs.length}</h2>
+      <h3>${percent}%</h3>
+      تم التصحيح تلقائيًا. أحسنت في المحاولة!
+    </div>
+
+    <button class="secondary" onclick="home()">العودة للرئيسية</button>
+  `;
+
+  document.getElementById("result").scrollIntoView({behavior:"smooth"});
+});
+
+function init(){
+  load();
+  render();
+
+  const match = location.hash.match(/exam=([^&]+)/);
+
+  if(match){
+    const e = exams.find(x=>x.id===match[1]);
+    if(e)solve(e.id);
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>
+
